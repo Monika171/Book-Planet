@@ -4,7 +4,7 @@
 @include('partials._hero')
 @include('partials._search')
 
-<div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
+<div class="grid gap-4 space-y-4 md:space-y-0 max-w-3xl mx-auto">
 
 @unless(count($books) == 0)
 
@@ -25,5 +25,9 @@
 <p>No Books Found</p>
 @endunless
 
+</div>
+
+<div class="mt-6 p-4 mx-5">
+    {{$books->links('pagination::tailwind')}}
 </div>
 @endsection

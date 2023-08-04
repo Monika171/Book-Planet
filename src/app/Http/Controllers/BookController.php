@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class BookController extends Controller
 {
     // Show all Books
     public function index() {
         return view('books.index', [
-            'books' => Book::latest()->filter(request(['search']))->get()
+            'books' => Book::latest()->filter(request(['search']))->paginate(10)
         ]);
     }
 
@@ -19,6 +20,24 @@ class BookController extends Controller
         return view('books.show', [
             'book' => $book
         ]);
+    }
+
+    // Show Add Form
+    public function create() {
+        return view('books.create');
+    }
+
+    // Store Book Data
+    public function store(Request $request) {
+        $formFields = $request->validate([
+            'title' => ['required', Rule::unique('books', 'title')],
+            'author' => 'required'
+        ]);
+
+        Book::create($formFields);
+
+        return redirect('/')->with('message', 'Book Added Successfully!');
+        // return redirect('/');
     }
 
 }

@@ -16,6 +16,11 @@ use App\Http\Controllers\BookController;
 // All Books
 Route::get('/', [BookController::class, 'index']);
 
+// Show Add Form
+Route::get('/books/create', [BookController::class, 'create']);
+
+// Store Book Data
+Route::post('/books',[BookController::class, 'store']);
 
 // Single Book
 Route::get('/books/{book}',[BookController::class, 'show']);

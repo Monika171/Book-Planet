@@ -12,6 +12,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         />
+        <script src="//unpkg.com/alpinejs" defer></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
@@ -48,5 +49,16 @@
         <main>
             @yield('content')
         </main>
+        <footer
+        class="fixed bottom-0 left-0 w-full flex items-center justify-center font-bold bg-laravel text-white h-16 mt-24 opacity-90"
+    >
+        <a
+            href="/books/create"
+            class="absolute bg-black text-white py-2 px-5"
+            >Add a Book
+        </a>
+        </footer>
+
+    @include('flash-message')
     </body>
 </html>
