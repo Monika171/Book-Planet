@@ -25,10 +25,13 @@
                     </a>
                 </li>
                 <li>
-                    {{-- <a href="/books/{{$book->id}}/edit">
-                        <i class="fa-solid fa-pencil"></i><br>
-                        <span class="text-xs text-gray-500"> Delete</span>
-                    </a> --}}
+                    <form method="POST" action="/books/{{$book->id}}">
+                    @csrf
+                    @method('DELETE')
+                        <button><i class="fa-solid fa-trash"></i><br>
+                            <span class="text-xs text-gray-500"> Delete</span>
+                        </button>             
+                    </form>
                 </li>
             </ul>
         </div>

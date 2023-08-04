@@ -36,7 +36,7 @@ class BookController extends Controller
 
         Book::create($formFields);
 
-        return redirect('/')->with('message', 'Book Added Successfully!');
+        return redirect('/')->with('message', 'Book added successfully!');
     }
 
     // Show Edit Form
@@ -53,7 +53,13 @@ class BookController extends Controller
 
         $book->update($formFields);
 
-        return redirect('/')->with('message', 'Book Info Updated Successfully!');
+        return redirect('/')->with('message', 'Book info updated successfully!');
+    }
+
+    // Delete a Book
+    public function destroy(Book $book) {
+        $book->delete();
+        return redirect('/')->with('message', 'Book deleted successfully!');
     }
 
 }
