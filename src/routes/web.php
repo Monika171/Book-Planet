@@ -1,5 +1,6 @@
 <?php
 
+use App\Book;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +12,18 @@
 |
 */
 
+// All Books
 Route::get('/', function () {
-    return view('welcome');
+    return view('books', [
+        'heading' => 'World of Books',
+        'books' => Book::all()
+    ]);
+});
+
+
+// Single Book
+Route::get('/books/{id}', function($id){
+    return view('book', [
+        'book' => Book::find($id)
+    ]);
 });
