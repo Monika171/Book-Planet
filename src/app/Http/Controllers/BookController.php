@@ -10,7 +10,7 @@ class BookController extends Controller
     // Show all Books
     public function index() {
         return view('books.index', [
-            'books' => Book::all()
+            'books' => Book::latest()->filter(request(['search']))->get()
         ]);
     }
 
