@@ -1,6 +1,7 @@
 <?php
 
 use App\Book;
+use App\Http\Controllers\BookController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,17 +14,8 @@ use App\Book;
 */
 
 // All Books
-Route::get('/', function () {
-    return view('books', [
-        'heading' => 'World of Books',
-        'books' => Book::all()
-    ]);
-});
+Route::get('/', [BookController::class, 'index']);
 
 
 // Single Book
-Route::get('/books/{id}', function($id){
-    return view('book', [
-        'book' => Book::find($id)
-    ]);
-});
+Route::get('/books/{book}',[BookController::class, 'show']);
