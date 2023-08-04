@@ -10,13 +10,27 @@
 
 @foreach($books as $book)
     <div class="bg-gray-50 border border-gray-200 rounded p-6">
-        <div class="flex">
+        <div class="flex justify-between items-center">
             <div>
                 <h3 class="text-2xl">
                     <a href="/books/{{$book->id}}">{{$book->title}}</a>
                 </h3>
                 <div class="text-xl font-bold mb-4">{{$book->author}}</div>
             </div>
+            <ul class="flex space-x-6 mr-6 text-lg">
+                <li>
+                    <a href="/books/{{$book->id}}/edit">
+                        <i class="fa-solid fa-pencil"></i><br>
+                        <span class="text-xs text-gray-500"> Edit</span>    
+                    </a>
+                </li>
+                <li>
+                    {{-- <a href="/books/{{$book->id}}/edit">
+                        <i class="fa-solid fa-pencil"></i><br>
+                        <span class="text-xs text-gray-500"> Delete</span>
+                    </a> --}}
+                </li>
+            </ul>
         </div>
     </div>
 @endforeach

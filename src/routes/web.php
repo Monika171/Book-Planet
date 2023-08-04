@@ -22,5 +22,11 @@ Route::get('/books/create', [BookController::class, 'create']);
 // Store Book Data
 Route::post('/books',[BookController::class, 'store']);
 
+// Show Edit Form
+Route::get('/books/{book}/edit',[BookController::class, 'edit']);
+
+// Update Book Info
+Route::put('/books/{book}',[BookController::class, 'update']);
+
 // Single Book
 Route::get('/books/{book}',[BookController::class, 'show']);

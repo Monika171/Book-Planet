@@ -37,7 +37,23 @@ class BookController extends Controller
         Book::create($formFields);
 
         return redirect('/')->with('message', 'Book Added Successfully!');
-        // return redirect('/');
+    }
+
+    // Show Edit Form
+    public function edit(Book $book) {
+        return view('books.edit', ['book' => $book]);
+    }
+
+    // Update Book Data
+    public function update(Request $request, Book $book) {
+        $formFields = $request->validate([
+            'title' => 'required',
+            'author' => 'required'
+        ]);
+
+        $book->update($formFields);
+
+        return redirect('/')->with('message', 'Book Info Updated Successfully!');
     }
 
 }
