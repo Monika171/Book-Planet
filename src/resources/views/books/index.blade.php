@@ -3,21 +3,21 @@
 @section('content')
 @include('partials._hero')
 @include('partials._search')
-
-<div class="grid gap-4 space-y-4 md:space-y-0 max-w-3xl mx-auto">
+<div class="grid gap-4 space-y-4 md:space-y-0 max-w-3xl mx-auto mt-5 mb-20">
 
 @unless(count($books) == 0)
 
+@include('partials._sort')
 @foreach($books as $book)
-    <div class="bg-gray-50 border border-gray-200 rounded p-6">
+    <div class="bg-gray-50 border border-gray-200 rounded p-4">
         <div class="flex justify-between items-center">
             <div>
-                <h3 class="text-2xl">
+                <h3 class="text-xl font-bold">
                     <a href="/books/{{$book->id}}">{{$book->title}}</a>
                 </h3>
-                <div class="text-xl font-bold mb-4">{{$book->author}}</div>
+                <div class="text-base">by {{$book->author}}</div>
             </div>
-            <ul class="flex space-x-6 mr-6 text-lg">
+            <ul class="flex space-x-6 text-sm">
                 <li>
                     <a href="/books/{{$book->id}}/edit">
                         <i class="fa-solid fa-pencil"></i><br>
@@ -45,6 +45,7 @@
 </div>
 
 <div class="mt-6 p-4 mx-5">
-    {{$books->links('pagination::tailwind')}}
+    {{$books->appends(request()->query())->links('pagination::tailwind')}}
 </div>
+@include('partials._footer')
 @endsection

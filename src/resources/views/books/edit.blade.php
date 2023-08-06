@@ -55,7 +55,7 @@
 
             <div class="mb-6 text-center">
                 <button
-                    class="bg-laravel text-white rounded py-2 px-4 hover:bg-black"
+                    class="bg-zinc-800 text-white rounded py-2 px-4 hover:bg-zinc-900"
                 >
                     Submit
                 </button>

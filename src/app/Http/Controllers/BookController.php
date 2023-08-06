@@ -8,10 +8,17 @@ use Illuminate\Validation\Rule;
 
 class BookController extends Controller
 {
-    // Show all Books
-    public function index() {
-        return view('books.index', [
-            'books' => Book::latest()->filter(request(['search']))->paginate(10)
+    // Show all books
+    public function index(Request $request) {
+        $searchKeyword = $request->input('search');
+        $column = $request->input('column', 'created_at');
+        $direction = $request->input('direction', 'desc'); 
+
+        return view('books.index',
+        [
+            'books' => Book::sort($column, $direction)
+                        ->filter($searchKeyword)
+                        ->paginate(10)
         ]);
     }
 
@@ -22,12 +29,12 @@ class BookController extends Controller
         ]);
     }
 
-    // Show Add Form
+    // Show add form
     public function create() {
         return view('books.create');
     }
 
-    // Store Book Data
+    // Store book data
     public function store(Request $request) {
         $formFields = $request->validate([
             'title' => ['required', Rule::unique('books', 'title')],
@@ -35,16 +42,15 @@ class BookController extends Controller
         ]);
 
         Book::create($formFields);
-
         return redirect('/')->with('message', 'Book added successfully!');
     }
 
-    // Show Edit Form
+    // Show edit form
     public function edit(Book $book) {
         return view('books.edit', ['book' => $book]);
     }
 
-    // Update Book Data
+    // Update book data
     public function update(Request $request, Book $book) {
         $formFields = $request->validate([
             'title' => 'required',
@@ -52,7 +58,6 @@ class BookController extends Controller
         ]);
 
         $book->update($formFields);
-
         return redirect('/')->with('message', 'Book info updated successfully!');
     }
 
@@ -61,5 +66,4 @@ class BookController extends Controller
         $book->delete();
         return redirect('/')->with('message', 'Book deleted successfully!');
     }
-
 }

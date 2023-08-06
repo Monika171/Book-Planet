@@ -9,11 +9,18 @@ class Book extends Model
 
     protected $fillable = ['title', 'author'];
     
-    public function scopeFilter($query, array $filters)
+    // Search for books
+    public function scopeFilter($query, $filter)
     {
-        if($filters['search'] ?? false) {
+        if($filter ?? false) {
             $query->where('title', 'like', '%'.request('search').'%')
-                ->orWhere('author', 'like', '%'.request('search').'%');
+                  ->orWhere('author', 'like', '%'.request('search').'%');
         }
+    }
+
+    // Sort books
+    public function scopeSort($query, $column, $direction)
+    {
+        $query->orderBy($column, $direction);
     }
 }

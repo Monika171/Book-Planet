@@ -11,9 +11,10 @@
     <div
         class="flex flex-col items-center justify-center text-center"
     >
-        <h3 class="text-2xl mb-2">{{$book->title}}</h3>
-        <div class="text-xl font-bold mb-4">{{$book->author}}</div>
+        <h3 class="text-2xl font-bold mb-2">{{$book->title}}</h3>
+        <div class="text-xl mb-4">by {{$book->author}}</div>
     </div>
 </div>
 </div>
+@include('partials._footer')
 @endsection
