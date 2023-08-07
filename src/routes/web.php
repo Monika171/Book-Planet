@@ -33,3 +33,6 @@ Route::delete('/books/{book}',[BookController::class, 'destroy']);
 
 // Single Book
 Route::get('/books/{book}',[BookController::class, 'show']);
+
+// Export Books Data in CSV and XML
+Route::get('/export-book-data', [BookController::class, 'exportBookData']);

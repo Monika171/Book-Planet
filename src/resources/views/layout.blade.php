@@ -18,22 +18,36 @@
     </head>
     <body class="mb-48">
         <nav class="flex justify-between items-center mb-4">
+            {{-- company logo --}}
             <a href="/"
                 ><img class="w-24" src="{{asset('images/logo.jpeg')}}" alt="" class="logo"
             /></a>
-            {{-- <ul class="flex space-x-6 mr-6 text-lg">
-                <li>
-                    <a href="register.html" class="hover:text-laravel"
-                        ><i class="fa-solid fa-user-plus"></i> Register</a
-                    >
-                </li>
-                <li>
-                    <a href="login.html" class="hover:text-laravel"
-                        ><i class="fa-solid fa-arrow-right-to-bracket"></i>
-                        Login</a
-                    >
-                </li>
-            </ul> --}}
+            
+            {{-- Export books data --}}
+            <form action="/export-book-data" method="get" id="downloadForm">
+                <ul class="flex flex-row space-x-4 mr-6 text-sm">
+                    <li class="flex flex-col">
+                        <div>
+                            <input type="checkbox" name="title" id="title" value="1">
+                            <label for="title">Book Titles</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="author" id="author" value="1">
+                            <label for="author">Authors</label>
+                        </div>
+                    </li>
+                    <li class="flex flex-row space-x-4">
+                        <button class="bg-zinc-700 text-white active:bg-zinc-600 text-xs px-4 py-2 rounded-full shadow hover:bg-zinc-800 hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" type="submit" name="format" value="csv"
+                        >
+                        Download CSV
+                        </button>
+                        <button class="bg-zinc-700 text-white active:bg-zinc-600 text-xs px-4 py-2 rounded-full shadow hover:bg-zinc-800 hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" type="submit" name="format" value="xml"
+                        >
+                        Download XML
+                        </button>
+                    </li>
+                </ul>
+            </form>
         </nav>
         <main>
             @yield('content')
