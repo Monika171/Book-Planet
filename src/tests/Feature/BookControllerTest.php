@@ -139,4 +139,70 @@ class BookControllerTest extends TestCase
         $response_search_author = $this->get('/?search='.$searchKeyword_author);
         $response_search_author->assertSee($searchKeyword_author);
     }
+
+    // Export a list with title and author in CSV
+    /** @test */
+    public function test_title_and_author_from_books_can_be_exported_as_csv()
+    {
+        factory(Book::class, 10)->create();
+
+        $response = $this->get('/export-book-data?title=1&author=1&format=csv');
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'text/csv; charset=UTF-8');
+    }
+
+    // Export a list with only titles in CSV
+    /** @test */
+    public function test_title_from_books_can_be_exported_as_csv()
+    {
+        factory(Book::class, 10)->create();
+
+        $response = $this->get('/export-book-data?title=1&format=csv');
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'text/csv; charset=UTF-8');
+    }
+
+    // Export a list with only authors in CSV
+    /** @test */
+    public function test_author_from_books_can_be_exported_as_csv()
+    {
+        factory(Book::class, 10)->create();
+
+        $response = $this->get('/export-book-data?author=1&format=csv');
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'text/csv; charset=UTF-8');
+    }
+
+    // Export a list with title and author in XML
+    /** @test */
+    public function test_title_and_author_from_books_can_be_exported_as_xml()
+    {
+        factory(Book::class, 10)->create();
+
+        $response = $this->get('/export-book-data?title=1&author=1&format=xml');
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'text/xml; charset=UTF-8');
+    }
+
+    // Export a list with only titles in XML
+    /** @test */
+    public function test_title_from_books_can_be_exported_as_xml()
+    {
+        factory(Book::class, 10)->create();
+
+        $response = $this->get('/export-book-data?title=1&format=xml');
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'text/xml; charset=UTF-8');
+    }
+
+    // Export a list with only authors in XML
+    /** @test */
+    public function test_author_from_books_can_be_exported_as_xml()
+    {
+        factory(Book::class, 10)->create();
+
+        $response = $this->get('/export-book-data?author=1&format=xml');
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'text/xml; charset=UTF-8');
+    }
 }
