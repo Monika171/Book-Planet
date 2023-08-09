@@ -10,9 +10,9 @@ use App\Book;
 class BookControllerTest extends TestCase
 {
     use RefreshDatabase;
-
+ 
     /** @test */
-
+    
     // List Books
     public function test_books_can_be_viewed(){
         $response = $this->get('/');
@@ -42,5 +42,23 @@ class BookControllerTest extends TestCase
         $response->assertStatus(302);
         $this->assertCount(1, Book::all());
         $this->assertDatabaseHas('books', $bookData);
+    }
+
+    // Delete a book from the list
+    public function test_a_book_can_be_deleted()
+    {
+        // Disabling exception handling for CSRF token mismatch
+        $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
+
+        $book = Book::create([
+            'title' => 'Title 2023',
+            'author' => 'Some Author',
+        ]);
+
+        $response = $this->delete("/books/{$book->id}");
+        $this->assertDatabaseMissing('books', ['id' => $book->id]);
+        $response->assertStatus(302);
+        $response->assertRedirect('/');
+        $response->assertSessionHas('message', 'Book deleted successfully!');
     }
 }
