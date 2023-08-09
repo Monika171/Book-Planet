@@ -123,4 +123,20 @@ class BookControllerTest extends TestCase
             'Author A',
         ]);
     }
+
+    // Search for a book by title or author
+    /** @test */
+    public function test_books_can_be_searched_by_title_or_author(){
+        $books = factory(Book::class, 5)->create();
+
+        // search by title
+        $searchKeyword_title = $books->first()->title;
+        $response_search_title = $this->get('/?search='.$searchKeyword_title);
+        $response_search_title->assertSee($searchKeyword_title);
+
+        // search by author
+        $searchKeyword_author = $books->last()->author;
+        $response_search_author = $this->get('/?search='.$searchKeyword_author);
+        $response_search_author->assertSee($searchKeyword_author);
+    }
 }
