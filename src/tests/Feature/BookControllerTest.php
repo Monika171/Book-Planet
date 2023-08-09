@@ -10,15 +10,15 @@ use App\Book;
 class BookControllerTest extends TestCase
 {
     use RefreshDatabase;
- 
-    /** @test */
-    
+     
     // List Books
+    /** @test */
     public function test_books_can_be_viewed(){
         $response = $this->get('/');
         $response->assertStatus(200);
     }
 
+    /** @test */
     public function test_books_shows_correct_info(){
         $books = factory(Book::class, 5)->create();
         $response = $this->get('/');
@@ -30,6 +30,7 @@ class BookControllerTest extends TestCase
     }
 
     // Add a book to the list
+    /** @test */
     public function test_new_book_can_be_added() {
         // Disabling CSRF protection for this test
         $this->withoutMiddleware();
@@ -45,6 +46,7 @@ class BookControllerTest extends TestCase
     }
 
     // Delete a book from the list
+    /** @test */
     public function test_a_book_can_be_deleted()
     {
         // Disabling exception handling for CSRF token mismatch
@@ -63,6 +65,7 @@ class BookControllerTest extends TestCase
     }
 
     // Change an authors name or title
+    /** @test */
     public function test_author_name_or_book_title_can_be_changed(){
         $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
     
@@ -86,6 +89,38 @@ class BookControllerTest extends TestCase
             'id' => $book->id,
             'title' => $updatedTitle,
             'author' => $updatedAuthor,
+        ]);
+    }
+
+    // Sort by title or author
+    /** @test */
+    public function test_books_can_be_sorted_by_title_or_author() {
+        factory(Book::class)->create(['title' => 'Book C', 'author' => 'Author C']);
+        factory(Book::class)->create(['title' => 'Book A', 'author' => 'Author A']);
+        factory(Book::class)->create(['title' => 'Book E', 'author' => 'Author E']);
+        factory(Book::class)->create(['title' => 'Book B', 'author' => 'Author B']);
+        factory(Book::class)->create(['title' => 'Book D', 'author' => 'Author D']);
+
+        // example_case1: sort for book titles in ascending order
+        $response_when_title = $this->get('/?column=title&direction=asc');
+        $response_when_title->assertStatus(200);
+        $response_when_title->assertSeeInOrder([
+            'Book A',
+            'Book B',
+            'Book C',
+            'Book D',
+            'Book E',
+        ]);
+
+        // example_case2: sort for authors in descending order
+        $response_when_author = $this->get('/?column=author&direction=desc');
+        $response_when_author->assertStatus(200);
+        $response_when_author->assertSeeInOrder([
+            'Author E',
+            'Author D',
+            'Author C',
+            'Author B',
+            'Author A',
         ]);
     }
 }
