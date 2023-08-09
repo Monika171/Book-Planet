@@ -61,4 +61,31 @@ class BookControllerTest extends TestCase
         $response->assertRedirect('/');
         $response->assertSessionHas('message', 'Book deleted successfully!');
     }
+
+    // Change an authors name or title
+    public function test_author_name_or_book_title_can_be_changed(){
+        $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
+    
+        $book = Book::create([
+            'title' => 'Title 2023',
+            'author' => 'Some Author',
+        ]);
+    
+        $updatedTitle = 'Modified Title 2023';
+        $updatedAuthor = 'Modified Author Name';
+
+        $response = $this->post("/books/{$book->id}", [
+            '_method' => 'PUT',
+            'title' => $updatedTitle,
+            'author' => $updatedAuthor,
+        ]);
+        $response->assertStatus(302);
+        $response->assertRedirect('/');
+        
+        $this->assertDatabaseHas('books', [
+            'id' => $book->id,
+            'title' => $updatedTitle,
+            'author' => $updatedAuthor,
+        ]);
+    }
 }
