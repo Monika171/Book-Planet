@@ -2,6 +2,8 @@
 
 <p align="center"> <img src="https://github.com/Monika171/Book-Planet/blob/assignment01/src/public/images/book-planet.png" width=750> </p>
 
+Website Link: [https://the-book-planet.000webhostapp.com/](https://the-book-planet.000webhostapp.com/)
+
 A catalogue where all the book information can be seen and can be also exported as CSV and XML. There is a search box for quicker access and the list can also be sorted. One can even add a new book information (title & author), update the same if required and delete book info.
 
 ## Getting Started
@@ -115,11 +117,11 @@ This should look like the image below:
 
 1. After successful connection, directory `/` should appear, which has `htdocs` inside it.
 
-1. Inside htdocs, create a new directory (for example say: `laravel`)
+1. Inside htdocs, create a new directory (for example say: `laravel`).
 
 1. Go to the laravel project to be deployed on the left.
 
-1. Upload the contents of the `public` directory of the project to `htdocs` on the right and rest of the contents except 'public' (and '.git' if exists) directory to that new directory which was created in step 7 (‘`laravel`’ in this example)
+1. Upload the contents of the `public` directory of the project to `htdocs` on the right and rest of the contents except 'public' (and '.git' if exists) directory to that new directory which was created in step 7 (‘`laravel`’ in this example).
 
 1. Once uploaded, go to `control panel` again from step 3.
 
@@ -128,16 +130,16 @@ This should look like the image below:
    <u>Before</u>:
 
    ```
-   __DIR__.'/../storage/framework/maintenance.php'
+   __DIR__.'/../bootstrap/app.php'
    ```
 
    <u>After</u>:
 
    ```
-   __DIR__.'/laravel/storage/framework/maintenance.php'
+   __DIR__.'/laravel/bootstrap/app.php'
    ```
 
-1. Delete `config.php` (if exists) from `/htdocs/laravel/bootstrap/cache`
+1. Delete `config.php` (if exists) from `/htdocs/laravel/bootstrap/cache`.
 
 1. Update contents of `.env` file inside `/htdocs/laravel` with the right data for db host, port, database name, username and password which were created earlier.
 
@@ -146,6 +148,55 @@ This should look like the image below:
 1. In cpanel, go to `MySQL Databases` in DATABASES again and click on `Admin`. Click on `Import` from top toolbar and select the exported file from the previous step.
 
 1. The laravel project should work now.
+
+### Hosting over [000webhost](https://www.000webhost.com/)
+
+1. Sign up or Log in.
+
+1. `Create a new website`.
+
+1. Click on `Manage`.
+
+1. In `FILES` click on `File Manager`.
+
+1. Upload compressed form of the local laravel project and [Unzipper php](https://github.com/ndeet/unzipper) in `public_html`.
+
+1. Go to `https://<website-name>.000webhostapp.com/unzipper.php`.
+
+1. Select the right laravel project compressed file and click on `Unzip Archive`.
+
+1. Move unzipped contents of laravel project to '`/`'.
+
+1. Delete `public_html` directory and rename current `public` to “public_html”.
+
+1. In `app/providers` add the following to `AppServiceProvider.php`:
+
+   ```
+     public function register(): void
+      {
+        $this->app->bind('path.public', function(){
+            return base_path('public_html');
+        });
+      }
+   ```
+
+1. Go to `.env` file and copy `APP_KEY` after ‘base64:’
+
+1. Navigate to `/config/app.php`. Paste and save the previously copied value as:  
+   `'key' => env('APP_KEY', base64_decode(‘copied_APP_KEY_value’))`
+
+1. From local project environment database `export` all tables.
+
+1. In the website dashboard, scroll down to `DATABASES` and click on `MySQL Databases` to `Create New Database`.
+
+1. In `Manage Database`, from the newly created database, click on `PhpMyAdmin` on the right.
+
+1. Click on `Import` from top toolbar and select the previously exported file.
+
+1. Update the `.env` file with all the new details such as:  
+   `DB_HOST`, `DB_DATABASE`, `DB_USERNAME` and `DB_PASSWORD`.
+
+1. Visit the created website again and if everything is working as it should, in `.env` file, make `APP_DEBUG=false`.
 
 ## App Info
 
