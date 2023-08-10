@@ -91,7 +91,8 @@ php artisan config:clear
 ```
 
 This should look like the image below:
-Todo
+
+<p align="center"> <img src="https://github.com/Monika171/Book-Planet/blob/assignment01/src/public/images/book_planet_test_output.png" width=750> </p>
 
 ## Deployment
 
