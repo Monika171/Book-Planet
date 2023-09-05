@@ -1,4 +1,4 @@
-# Book Planet
+# The Book Planet
 
 <p align="center"> <img src="https://github.com/Monika171/Book-Planet/blob/assignment01/src/public/images/book-planet.png" width=750> </p>
 
